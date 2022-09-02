@@ -32,7 +32,7 @@ func main() {
 	})
 }
 
-// any type
+// any type (alias for interface{})
 func printAnything[T any](v T) {
 	fmt.Println(v)
 }
@@ -64,6 +64,21 @@ func sumNumbers[T MyNumber](numbers []T) T {
 	return result
 }
 
+/*
+Type Sets
+
+package constraints
+
+type Integer interface {
+  Signed | Unsigned
+}
+
+type Signed interface {
+  ~int | ~int8 | ~int16 | ~int32 | ~int64
+}
+*/
+
+// function constraints
 func max[T MyNumber](a, b T) T {
 	if a > b {
 		return a
@@ -74,6 +89,15 @@ func max[T MyNumber](a, b T) T {
 // comparable - Equal("abc", "abc")
 func Equal[T comparable](a, b T) bool {
 	return a == b
+}
+
+// Generic type definition
+type MySlice[T MyNumber] []T
+
+func printMySlice[N MyNumber, T MySlice[N]](sl T) {
+	for _, v := range sl {
+		fmt.Println(v)
+	}
 }
 
 // Type fields in structs
